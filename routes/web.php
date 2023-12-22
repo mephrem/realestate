@@ -35,7 +35,11 @@ require __DIR__.'/auth.php';
 //admin middleware
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('admin/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 });
+Route::get('admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
+
+
 // agent middleware
 Route::middleware(['auth','role:agent'])->group(function(){
     Route::get('agent/dashboard', [AgentController::class, 'agentDashboard'])->name('agent.dashboard');
