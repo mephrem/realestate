@@ -44,7 +44,7 @@
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
+                <h6 class="dropdown-header" style="background-color: #3a3b45!important; border: 1px solid #3a3b45!important;">
                     Alerts Center
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -95,7 +95,7 @@
             <!-- Dropdown - Messages -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
+                <h6 class="dropdown-header" style="background-color: #3a3b45!important; border: 1px solid #3a3b45!important;">
                     Message Center
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -151,29 +151,33 @@
         </li>
 
         <div class="topbar-divider d-none d-sm-block"></div>
-
+        @php
+            $id = Auth::user()->id;
+            $admin_profile_data = App\Models\User::find($id);
+        @endphp
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$admin_profile_data->name}}</span>
                 <img class="img-profile rounded-circle"
-                    src="img/undraw_profile.svg">
+                    src="{{ (!empty($admin_profile_data->photo)) ? 
+                        url('upload/admin_images/'.$admin_profile_data->photo) : url('upload/undraw_profile.svg') }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('admin.profile')}}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
+                </a>
+                <a class="dropdown-item" href="{{route('admin.change_password')}}">
+                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Change Password
                 </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
